@@ -1,0 +1,11 @@
+The Salespeople may view a few of the standard client reports, with the difference being that they are able to change the client number parameter, unlike when the client views the same report.
+
+AGA ClaimSearch - Same as client version.
+Collection Summary by Client Number - Same as client version but allows client # to be entered.
+Status report by Client Number - Same as client version but allows client # to be entered.
+File Notes - Same as client version, may not be directly accessed, but instead is a subreport of the previous two reports listed.
+
+
+Volume Report by Rep - A report for each sales person to display their own personal claims entered over the past week.  Date parameters are visible to the salesperson but nothing else.  They may view only their own business but may change the date span displayed.
+
+Client Number Lookup - A salesperson might not know the client #'s associated with each of their clients.  In order to run reports for them this information is necessary.  This report shows only the client numbers associated with that salesperson.

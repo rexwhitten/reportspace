@@ -1,0 +1,130 @@
+﻿@using ReportSpace.CustomerDashboard.Web.Helpers
+@{
+    if (ViewBag.Icon == null || ViewBag.Icon == "")
+    {
+        ViewBag.Icon = "iconfa-hdd";
+    }
+
+}
+@{
+     
+    
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <!-- Meta -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Space | @ViewBag.Title</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href=@Url.Content("~/Content/css/style.default.css") rel="stylesheet" />
+    <link href=@Url.Content("~/Content/css/bootstrap.min.css") rel="stylesheet" />
+    <link href=@Url.Content("~/Content/css/bootstrap-responsive.min.css") rel="stylesheet" />
+    <link href=@Url.Content("~/Content/css/jquery.ui.css") rel="stylesheet" />
+    <link href=@Url.Content("~/Content/css/animate.min.css") rel="stylesheet" />
+    <link href=@Url.Content("~/Content/css/animate.delay.css") rel="stylesheet" />
+    <link href=@Url.Content("~/Content/css/isotope.css") rel="stylesheet" />
+    <link href=@Url.Content("~/Content/css/colorbox.css") rel="stylesheet" />
+    <link href=@Url.Content("~/Content/css/uniform.tp.css") rel="stylesheet" />
+    <link href=@Url.Content("~/Content/css/colorpicker.css") rel="stylesheet" />
+    <link href=@Url.Content("~/Content/css/jquery.jgrowl.css") rel="stylesheet" />
+    <link href=@Url.Content("~/Content/css/jquery.alerts.css") rel="stylesheet" />
+    <link href=@Url.Content("~/Content/css/jquery.tagsinput.css") rel="stylesheet" />
+    <link href=@Url.Content("~/Content/css/ui.spinner.css") rel="stylesheet" />
+    <link href=@Url.Content("~/Content/css/jquery.chosen.css") rel="stylesheet" />
+    <link href=@Url.Content("~/Content/css/fullcalendar.css") rel="stylesheet" />
+    <link href=@Url.Content("~/Content/css/roboto.css") rel="stylesheet" />
+    <link href=@Url.Content("~/Content/css/lato.css") rel="stylesheet" />
+    <link href=@Url.Content("~/Content/css/font-awesome.min.css") rel="stylesheet" />
+</head>
+<body>
+    <div class="mainwrapper">
+        <!-- Header -->
+        <div class="header hidden-phone hidden-tablet"  style="margin-top:-20px;">
+            <div class="logo">
+                <a href="dashboard.html">
+                    <img src="@Url.Content("~/Content/images/logo.png")" alt="" />
+                </a>
+            </div>
+            <div class="headerinner">
+                <!-- View Header -->
+                <div class="pageheader" style="height: 70px;">
+                    <div style="float:left; padding-top:10px;">
+                        <div class="pageicon">
+                            <span class="@ViewBag.Icon"></span>
+                        </div>
+                    </div>
+                    <div style="margin-top:-20px; padding-top:10px">
+                        <div class="pagetitle">
+                            <h5>@ViewBag.Message</h5>
+                            <h1>@ViewBag.Title</h1>
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- View Actions -->
+            </div>
+        </div>
+
+        <!-- Left Panel -->
+        <div class="leftpanel">
+            <div class="leftmenu">
+                <ul class="nav nav-tabs nav-stacked">
+                    <li>@Html.ActionLinkWithContent("<span class=\"icon-tasks\"></span>Reports", "index", "category", null, null)</li>
+                    <li><a href=" http://www.microsoft.com/en-us/download/details.aspx?id=29072"><span class="iconsweets-strategy2"></span>Report Builder</a></li>
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <li><a href="~/Admin/Index"><span class="iconsweets-users"></span>Administration</a></li>
+                    }
+                    @Html.Partial("_LoginPartial")
+                </ul>
+
+                <div id="report-parameters-box" class="widgetbox animate0 fadeIn" style="display: none">
+                    <h4 class="widgettitle">Parameters
+                            
+                    </h4>
+                    <div class="widgetcontent nopadding">
+                        <div id="report-parameters-container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel -->
+        <div class="rightpanel">
+            <div class="maincontent">
+                <div class="maincontentinner" style="height: 900px">
+                    <section id="content">
+                    </section>
+                    @RenderBody()
+                </div>
+            </div>
+            <!--maincontent-->
+        </div>
+    </div>
+    @Scripts.Render(
+                    "~/Content/js/jquery",
+                    "~/Content/js/bootstrap",
+        "~/Content/js/base");
+    <script type="text/javascript">
+        $(document).ready(function () {
+            toastr.options = {
+                "debug": false,
+                "positionClass": "toast-top-right",
+                "onclick": null,
+                "fadeIn": 300,
+                "fadeOut": 1000,
+                "timeOut": 5000,
+                "extendedTimeOut": 1000
+            };
+
+            $('#mainwrapper').height(window.screen.height - 300);
+        });
+    </script>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

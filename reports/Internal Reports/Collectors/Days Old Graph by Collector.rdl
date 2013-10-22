@@ -1,0 +1,948 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <Body>
+    <ReportItems>
+      <Chart Name="Chart1">
+        <ChartCategoryHierarchy>
+          <ChartMembers>
+            <ChartMember>
+              <Group Name="Chart1_CategoryGroup">
+                <GroupExpressions>
+                  <GroupExpression>=Fields!COLLECTOR.Value</GroupExpression>
+                </GroupExpressions>
+              </Group>
+              <SortExpressions>
+                <SortExpression>
+                  <Value>=Fields!COLLECTOR.Value</Value>
+                </SortExpression>
+              </SortExpressions>
+              <Label>=Fields!COLLECTOR.Value</Label>
+            </ChartMember>
+          </ChartMembers>
+        </ChartCategoryHierarchy>
+        <ChartSeriesHierarchy>
+          <ChartMembers>
+            <ChartMember>
+              <Group Name="Chart1_SeriesGroup">
+                <GroupExpressions>
+                  <GroupExpression>=SWITCH(Fields!DAYS_OLD.Value&gt;999998,"Untouched",Fields!DAYS_OLD.Value&gt;=0 AND Fields!DAYS_OLD.Value&lt;11, "10 or Less", Fields!DAYS_OLD.Value&gt;10 AND Fields!DAYS_OLD.Value&lt;31, "11 to 30", Fields!DAYS_OLD.Value&gt;30 AND Fields!DAYS_OLD.Value&lt;91, "31 to 90", Fields!DAYS_OLD.Value&gt;90, "Over 90")</GroupExpression>
+                </GroupExpressions>
+              </Group>
+              <SortExpressions>
+                <SortExpression>
+                  <Value>=Fields!DAYS_OLD.Value&gt;999998</Value>
+                </SortExpression>
+                <SortExpression>
+                  <Value>=Fields!DAYS_OLD.Value</Value>
+                </SortExpression>
+              </SortExpressions>
+              <Label>=SWITCH(Fields!DAYS_OLD.Value&gt;999998,"Untouched", Fields!DAYS_OLD.Value&lt;11, "10 or Less", Fields!DAYS_OLD.Value&lt;31, "11 to 30", Fields!DAYS_OLD.Value&lt;91, "31 to 90", Fields!DAYS_OLD.Value&gt;90, "Over 90")</Label>
+            </ChartMember>
+          </ChartMembers>
+        </ChartSeriesHierarchy>
+        <ChartData>
+          <ChartSeriesCollection>
+            <ChartSeries Name="Sumable_Column">
+              <ChartDataPoints>
+                <ChartDataPoint>
+                  <ChartDataPointValues>
+                    <Y>=Sum(Fields!Sumable_Column.Value)</Y>
+                  </ChartDataPointValues>
+                  <ChartDataLabel>
+                    <Style />
+                  </ChartDataLabel>
+                  <ToolTip>=Sum(Fields!Sumable_Column.Value) &amp; " Files"</ToolTip>
+                  <ActionInfo>
+                    <Actions>
+                      <Action>
+                        <Drillthrough>
+                          <ReportName>Days Old subreport</ReportName>
+                          <Parameters>
+                            <Parameter Name="CollNo">
+                              <Value>=Fields!COLLECTOR.Value</Value>
+                            </Parameter>
+                            <Parameter Name="MinDO">
+                              <Value>=SWITCH(Fields!DAYS_OLD.Value&gt;999998, 999999,Fields!DAYS_OLD.Value&gt;90, 91, (Fields!DAYS_OLD.Value&gt;30 AND Fields!DAYS_OLD.Value&lt;91), 31, (Fields!DAYS_OLD.Value&gt;10 AND Fields!DAYS_OLD.Value&lt;31), 11, Fields!DAYS_OLD.Value&lt;11, 0)</Value>
+                            </Parameter>
+                            <Parameter Name="MaxDO">
+                              <Value>=SWITCH(Fields!DAYS_OLD.Value&gt;999998, 999999,Fields!DAYS_OLD.Value&gt;90, 10000, (Fields!DAYS_OLD.Value&gt;30 AND Fields!DAYS_OLD.Value&lt;91), 90, (Fields!DAYS_OLD.Value&gt;10 AND Fields!DAYS_OLD.Value&lt;31), 30, Fields!DAYS_OLD.Value&lt;11, 10)</Value>
+                            </Parameter>
+                          </Parameters>
+                        </Drillthrough>
+                      </Action>
+                    </Actions>
+                  </ActionInfo>
+                  <Style>
+                    <Color>=SWITCH(Fields!DAYS_OLD.Value&gt;999998,"Silver", Fields!DAYS_OLD.Value&gt;90, "Red", (Fields!DAYS_OLD.Value&gt;30 AND Fields!DAYS_OLD.Value&lt;91), "Yellow", (Fields!DAYS_OLD.Value&gt;10 AND Fields!DAYS_OLD.Value&lt;31), "Green", Fields!DAYS_OLD.Value&lt;11, "CornflowerBlue")</Color>
+                  </Style>
+                  <ChartMarker>
+                    <Style />
+                  </ChartMarker>
+                  <DataElementOutput>Output</DataElementOutput>
+                </ChartDataPoint>
+              </ChartDataPoints>
+              <Subtype>PercentStacked</Subtype>
+              <Style />
+              <ChartEmptyPoints>
+                <Style />
+                <ChartMarker>
+                  <Style />
+                </ChartMarker>
+                <ChartDataLabel>
+                  <Style />
+                </ChartDataLabel>
+              </ChartEmptyPoints>
+              <ValueAxisName>Primary</ValueAxisName>
+              <CategoryAxisName>Primary</CategoryAxisName>
+              <ChartSmartLabel>
+                <CalloutLineColor>Black</CalloutLineColor>
+                <MinMovingDistance>0pt</MinMovingDistance>
+              </ChartSmartLabel>
+            </ChartSeries>
+          </ChartSeriesCollection>
+        </ChartData>
+        <ChartAreas>
+          <ChartArea Name="Default">
+            <ChartCategoryAxes>
+              <ChartAxis Name="Primary">
+                <Style>
+                  <FontSize>8pt</FontSize>
+                </Style>
+                <ChartAxisTitle>
+                  <Caption>Queue #</Caption>
+                  <Style>
+                    <FontSize>8pt</FontSize>
+                  </Style>
+                </ChartAxisTitle>
+                <Interval>1</Interval>
+                <ChartMajorGridLines>
+                  <Enabled>False</Enabled>
+                  <Style>
+                    <Border>
+                      <Color>Gainsboro</Color>
+                    </Border>
+                  </Style>
+                </ChartMajorGridLines>
+                <ChartMinorGridLines>
+                  <Style>
+                    <Border>
+                      <Color>Gainsboro</Color>
+                      <Style>Dotted</Style>
+                    </Border>
+                  </Style>
+                </ChartMinorGridLines>
+                <ChartMinorTickMarks>
+                  <Length>0.5</Length>
+                </ChartMinorTickMarks>
+                <CrossAt>NaN</CrossAt>
+                <Minimum>NaN</Minimum>
+                <Maximum>NaN</Maximum>
+                <IncludeZero>false</IncludeZero>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
+              </ChartAxis>
+              <ChartAxis Name="Secondary">
+                <Style>
+                  <FontSize>8pt</FontSize>
+                </Style>
+                <ChartAxisTitle>
+                  <Caption>Axis Title</Caption>
+                  <Style>
+                    <FontSize>8pt</FontSize>
+                  </Style>
+                </ChartAxisTitle>
+                <ChartMajorGridLines>
+                  <Enabled>False</Enabled>
+                  <Style>
+                    <Border>
+                      <Color>Gainsboro</Color>
+                    </Border>
+                  </Style>
+                </ChartMajorGridLines>
+                <ChartMinorGridLines>
+                  <Style>
+                    <Border>
+                      <Color>Gainsboro</Color>
+                      <Style>Dotted</Style>
+                    </Border>
+                  </Style>
+                </ChartMinorGridLines>
+                <ChartMinorTickMarks>
+                  <Length>0.5</Length>
+                </ChartMinorTickMarks>
+                <CrossAt>NaN</CrossAt>
+                <Location>Opposite</Location>
+                <Minimum>NaN</Minimum>
+                <Maximum>NaN</Maximum>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
+              </ChartAxis>
+            </ChartCategoryAxes>
+            <ChartValueAxes>
+              <ChartAxis Name="Primary">
+                <Style>
+                  <FontSize>8pt</FontSize>
+                </Style>
+                <ChartAxisTitle>
+                  <Caption>Percent Of Queue</Caption>
+                  <Style>
+                    <FontSize>8pt</FontSize>
+                  </Style>
+                </ChartAxisTitle>
+                <ChartMajorGridLines>
+                  <Style>
+                    <Border>
+                      <Color>Gainsboro</Color>
+                    </Border>
+                  </Style>
+                </ChartMajorGridLines>
+                <ChartMinorGridLines>
+                  <Style>
+                    <Border>
+                      <Color>Gainsboro</Color>
+                      <Style>Dotted</Style>
+                    </Border>
+                  </Style>
+                </ChartMinorGridLines>
+                <ChartMinorTickMarks>
+                  <Length>0.5</Length>
+                </ChartMinorTickMarks>
+                <CrossAt>NaN</CrossAt>
+                <Minimum>0</Minimum>
+                <Maximum>100</Maximum>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
+              </ChartAxis>
+              <ChartAxis Name="Secondary">
+                <Style>
+                  <FontSize>8pt</FontSize>
+                </Style>
+                <ChartAxisTitle>
+                  <Caption>Axis Title</Caption>
+                  <Style>
+                    <FontSize>8pt</FontSize>
+                  </Style>
+                </ChartAxisTitle>
+                <ChartMajorGridLines>
+                  <Style>
+                    <Border>
+                      <Color>Gainsboro</Color>
+                    </Border>
+                  </Style>
+                </ChartMajorGridLines>
+                <ChartMinorGridLines>
+                  <Style>
+                    <Border>
+                      <Color>Gainsboro</Color>
+                      <Style>Dotted</Style>
+                    </Border>
+                  </Style>
+                </ChartMinorGridLines>
+                <ChartMinorTickMarks>
+                  <Length>0.5</Length>
+                </ChartMinorTickMarks>
+                <CrossAt>NaN</CrossAt>
+                <Location>Opposite</Location>
+                <Minimum>NaN</Minimum>
+                <Maximum>NaN</Maximum>
+                <ChartAxisScaleBreak>
+                  <Style />
+                </ChartAxisScaleBreak>
+              </ChartAxis>
+            </ChartValueAxes>
+            <ChartThreeDProperties>
+              <Enabled>true</Enabled>
+              <Inclination>23</Inclination>
+              <DepthRatio>22</DepthRatio>
+            </ChartThreeDProperties>
+            <Style>
+              <BackgroundGradientType>None</BackgroundGradientType>
+            </Style>
+          </ChartArea>
+        </ChartAreas>
+        <ChartLegends>
+          <ChartLegend Name="Default">
+            <Style>
+              <BackgroundGradientType>None</BackgroundGradientType>
+              <FontSize>8pt</FontSize>
+            </Style>
+            <ChartLegendTitle>
+              <Caption>Days Since S-Code</Caption>
+              <Style>
+                <FontSize>8pt</FontSize>
+                <FontWeight>Bold</FontWeight>
+                <TextAlign>Center</TextAlign>
+              </Style>
+            </ChartLegendTitle>
+            <HeaderSeparatorColor>Black</HeaderSeparatorColor>
+            <ColumnSeparatorColor>Black</ColumnSeparatorColor>
+          </ChartLegend>
+        </ChartLegends>
+        <ChartTitles>
+          <ChartTitle Name="Default">
+            <Caption>Paperless S-Code Aging</Caption>
+            <Style>
+              <BackgroundGradientType>None</BackgroundGradientType>
+              <FontWeight>Bold</FontWeight>
+              <TextAlign>General</TextAlign>
+              <VerticalAlign>Top</VerticalAlign>
+            </Style>
+          </ChartTitle>
+        </ChartTitles>
+        <Palette>BrightPastel</Palette>
+        <ChartBorderSkin>
+          <Style>
+            <BackgroundColor>Gray</BackgroundColor>
+            <BackgroundGradientType>None</BackgroundGradientType>
+            <Color>White</Color>
+          </Style>
+        </ChartBorderSkin>
+        <ChartNoDataMessage Name="NoDataMessage">
+          <Caption>No Data Available</Caption>
+          <Style>
+            <BackgroundGradientType>None</BackgroundGradientType>
+            <TextAlign>General</TextAlign>
+            <VerticalAlign>Top</VerticalAlign>
+          </Style>
+        </ChartNoDataMessage>
+        <DataSetName>DAYS_OLD</DataSetName>
+        <Height>5.66666in</Height>
+        <Width>3.73834in</Width>
+        <Style>
+          <Border>
+            <Color>LightGrey</Color>
+            <Style>Solid</Style>
+          </Border>
+          <BackgroundColor>White</BackgroundColor>
+          <BackgroundGradientType>None</BackgroundGradientType>
+        </Style>
+      </Chart>
+      <Textbox Name="Textbox1">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>**Click the colored sections to view corresponding claims.**</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox1</rd:DefaultName>
+        <Top>5.91666in</Top>
+        <Height>0.21751in</Height>
+        <Width>3.73834in</Width>
+        <ZIndex>1</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="UserID">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=User!UserID</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>UserID</rd:DefaultName>
+        <Top>5.66666in</Top>
+        <Height>0.25in</Height>
+        <Width>3.73834in</Width>
+        <ZIndex>2</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="UNTOUCHED">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Sum(Fields!UNTOUCHED.Value, "DAYS_OLD") &amp; " Files"</Value>
+                <Style>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>Blue</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>UNTOUCHED</rd:DefaultName>
+        <ActionInfo>
+          <Actions>
+            <Action>
+              <Drillthrough>
+                <ReportName>Days Old subreport</ReportName>
+                <Parameters>
+                  <Parameter Name="CollNo">
+                    <Value>=Fields!COLLECTOR.Value</Value>
+                  </Parameter>
+                  <Parameter Name="MinDO">
+                    <Value>=999999</Value>
+                  </Parameter>
+                  <Parameter Name="MaxDO">
+                    <Value>=999999</Value>
+                  </Parameter>
+                </Parameters>
+              </Drillthrough>
+            </Action>
+          </Actions>
+        </ActionInfo>
+        <Top>0.56125in</Top>
+        <Left>4.7557in</Left>
+        <Height>0.25in</Height>
+        <Width>1in</Width>
+        <ZIndex>3</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="TENORLESS">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Sum(Fields!TENORLESS.Value, "DAYS_OLD") &amp; " Files"</Value>
+                <Style>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>Blue</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>TENORLESS</rd:DefaultName>
+        <ActionInfo>
+          <Actions>
+            <Action>
+              <Drillthrough>
+                <ReportName>Days Old subreport</ReportName>
+                <Parameters>
+                  <Parameter Name="CollNo">
+                    <Value>=Fields!COLLECTOR.Value</Value>
+                  </Parameter>
+                  <Parameter Name="MinDO">
+                    <Value>0</Value>
+                  </Parameter>
+                  <Parameter Name="MaxDO">
+                    <Value>10</Value>
+                  </Parameter>
+                </Parameters>
+              </Drillthrough>
+            </Action>
+          </Actions>
+        </ActionInfo>
+        <Top>1.56125in</Top>
+        <Left>4.7557in</Left>
+        <Height>0.25in</Height>
+        <Width>1in</Width>
+        <ZIndex>4</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="NINTYandOver">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Sum(Fields!NINTYandOver.Value, "DAYS_OLD") &amp; " Files"</Value>
+                <Style>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>Blue</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>NINTYandOver</rd:DefaultName>
+        <ActionInfo>
+          <Actions>
+            <Action>
+              <Drillthrough>
+                <ReportName>Days Old subreport</ReportName>
+                <Parameters>
+                  <Parameter Name="CollNo">
+                    <Value>=Fields!COLLECTOR.Value</Value>
+                  </Parameter>
+                  <Parameter Name="MinDO">
+                    <Value>91</Value>
+                  </Parameter>
+                  <Parameter Name="MaxDO">
+                    <Value>10000</Value>
+                  </Parameter>
+                </Parameters>
+              </Drillthrough>
+            </Action>
+          </Actions>
+        </ActionInfo>
+        <Top>0.81125in</Top>
+        <Left>4.7557in</Left>
+        <Height>0.25in</Height>
+        <Width>1in</Width>
+        <ZIndex>5</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="THIRTYONEtoNINTY">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Sum(Fields!THIRTYONEtoNINTY.Value, "DAYS_OLD") &amp; " Files"</Value>
+                <Style>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>Blue</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>THIRTYONEtoNINTY</rd:DefaultName>
+        <ActionInfo>
+          <Actions>
+            <Action>
+              <Drillthrough>
+                <ReportName>Days Old subreport</ReportName>
+                <Parameters>
+                  <Parameter Name="CollNo">
+                    <Value>=Fields!COLLECTOR.Value</Value>
+                  </Parameter>
+                  <Parameter Name="MinDO">
+                    <Value>31</Value>
+                  </Parameter>
+                  <Parameter Name="MaxDO">
+                    <Value>90</Value>
+                  </Parameter>
+                </Parameters>
+              </Drillthrough>
+            </Action>
+          </Actions>
+        </ActionInfo>
+        <Top>1.06125in</Top>
+        <Left>4.7557in</Left>
+        <Height>0.25in</Height>
+        <Width>1in</Width>
+        <ZIndex>6</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="ELEVENtoTHIRTY">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Sum(Fields!ELEVENtoTHIRTY.Value, "DAYS_OLD") &amp; " Files"</Value>
+                <Style>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>Blue</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>ELEVENtoTHIRTY</rd:DefaultName>
+        <ActionInfo>
+          <Actions>
+            <Action>
+              <Drillthrough>
+                <ReportName>Days Old subreport</ReportName>
+                <Parameters>
+                  <Parameter Name="CollNo">
+                    <Value>=Fields!COLLECTOR.Value</Value>
+                  </Parameter>
+                  <Parameter Name="MinDO">
+                    <Value>11</Value>
+                  </Parameter>
+                  <Parameter Name="MaxDO">
+                    <Value>30</Value>
+                  </Parameter>
+                </Parameters>
+              </Drillthrough>
+            </Action>
+          </Actions>
+        </ActionInfo>
+        <Top>1.31125in</Top>
+        <Left>4.7557in</Left>
+        <Height>0.25in</Height>
+        <Width>1in</Width>
+        <ZIndex>7</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox7">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Untouched:</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox7</rd:DefaultName>
+        <Top>0.56125in</Top>
+        <Left>3.73834in</Left>
+        <Height>0.25in</Height>
+        <Width>1in</Width>
+        <ZIndex>8</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox8">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Over 90:</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox7</rd:DefaultName>
+        <Top>0.81125in</Top>
+        <Left>3.73834in</Left>
+        <Height>0.25in</Height>
+        <Width>1in</Width>
+        <ZIndex>9</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox9">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>31 to 90:</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox7</rd:DefaultName>
+        <Top>1.06125in</Top>
+        <Left>3.73834in</Left>
+        <Height>0.25in</Height>
+        <Width>1in</Width>
+        <ZIndex>10</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox10">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>10 or Less:</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox7</rd:DefaultName>
+        <Top>1.56125in</Top>
+        <Left>3.73834in</Left>
+        <Height>0.25in</Height>
+        <Width>1in</Width>
+        <ZIndex>11</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox11">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>11 to 30:</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox7</rd:DefaultName>
+        <Top>1.31125in</Top>
+        <Left>3.73834in</Left>
+        <Height>0.25in</Height>
+        <Width>1in</Width>
+        <ZIndex>12</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+    </ReportItems>
+    <Height>6.13417in</Height>
+    <Style />
+  </Body>
+  <Width>5.7557in</Width>
+  <Page>
+    <PageHeight>8.5in</PageHeight>
+    <PageWidth>11in</PageWidth>
+    <LeftMargin>0.25in</LeftMargin>
+    <RightMargin>0.25in</RightMargin>
+    <TopMargin>0.25in</TopMargin>
+    <BottomMargin>0.25in</BottomMargin>
+    <ColumnSpacing>0.25in</ColumnSpacing>
+    <Style />
+  </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DataSource1">
+      <DataSourceReference>ACCINC2</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>4ef43dda-7de0-40b0-ae2d-e2231d9aa8ff</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DAYS_OLD">
+      <Query>
+        <DataSourceName>DataSource1</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@userid">
+            <Value>=Parameters!userid.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>SELECT     FILENO, TIME, [DAYS OLD], STAT1_CODE, NAME, CRED_NAME, COLLECTOR, 1 AS 'Sumable_Column', FILEUSERNAME, ACTIVEUSERNAME, CollNo, 
+                      CASE WHEN [DAYS OLD] &gt; 999998 THEN 1 ELSE 0 END AS UNTOUCHED, CASE WHEN [DAYS OLD] &gt;= 0 AND [DAYS OLD] &lt; 11 THEN 1 ELSE 0 END AS TENORLESS, 
+                      CASE WHEN [DAYS OLD] &gt; 10 AND [DAYS OLD] &lt; 31 THEN 1 ELSE 0 END AS ELEVENtoTHIRTY, CASE WHEN [DAYS OLD] &gt; 30 AND 
+                      [DAYS OLD] &lt; 91 THEN 1 ELSE 0 END AS THIRTYONEtoNINTY, CASE WHEN [DAYS OLD] &gt; 90 AND [DAYS OLD] &lt; 999998 THEN 1 ELSE 0 END AS NINTYandOver, 
+                      CASE WHEN STAT1_CODE = 729 AND BALANCE = 0 THEN 1 END AS LIMIT, BALANCE
+FROM         DAYS_OLD
+WHERE     (FILENO &lt;&gt; N'412456' OR
+                      FILENO &lt;&gt; N'test1' OR
+                      FILENO &lt;&gt; N'test2' OR
+                      FILENO &lt;&gt; N'TEST3') AND (FILEUSERNAME = @userid) AND (STAT1_CODE &lt;&gt; N'850') AND (CASE WHEN STAT1_CODE = 729 AND BALANCE = 0 THEN 1 END IS NULL)</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="FILENO">
+          <DataField>FILENO</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TIME">
+          <DataField>TIME</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="DAYS_OLD">
+          <DataField>DAYS OLD</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="STAT1_CODE">
+          <DataField>STAT1_CODE</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="NAME">
+          <DataField>NAME</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CRED_NAME">
+          <DataField>CRED_NAME</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="COLLECTOR">
+          <DataField>COLLECTOR</DataField>
+          <rd:TypeName>System.Double</rd:TypeName>
+        </Field>
+        <Field Name="Sumable_Column">
+          <DataField>Sumable_Column</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="FILEUSERNAME">
+          <DataField>FILEUSERNAME</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ACTIVEUSERNAME">
+          <DataField>ACTIVEUSERNAME</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CollNo">
+          <DataField>CollNo</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="UNTOUCHED">
+          <DataField>UNTOUCHED</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="TENORLESS">
+          <DataField>TENORLESS</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="ELEVENtoTHIRTY">
+          <DataField>ELEVENtoTHIRTY</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="THIRTYONEtoNINTY">
+          <DataField>THIRTYONEtoNINTY</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="NINTYandOver">
+          <DataField>NINTYandOver</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="LIMIT">
+          <DataField>LIMIT</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="BALANCE">
+          <DataField>BALANCE</DataField>
+          <rd:TypeName>System.Double</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <ReportParameters>
+    <ReportParameter Name="userid">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>=ucase(Mid(User!UserID,8,len(User!UserID)))</Value>
+        </Values>
+      </DefaultValue>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+  </ReportParameters>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>91354845-3019-4341-8527-af0ecf2a67a5</rd:ReportID>
+</Report>

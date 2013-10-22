@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CE1367E7-17A1-4009-925F-C5E2DB331FA8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ReportSpace.CustomerDashboard.Core</RootNamespace>
+    <AssemblyName>ReportSpace.CustomerDashboard.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'dev_acrowire|AnyCPU'">
+    <OutputPath>bin\dev_acrowire\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.0.0-beta1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.0.0-beta1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation">
+      <HintPath>..\packages\FluentValidation.4.0.0.0\lib\Net40\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mobile" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WebActivator">
+      <HintPath>..\packages\WebActivator.1.3.2\lib\NETFramework40\WebActivator.dll</HintPath>
+    </Reference>
+    <Reference Include="WebMatrix.WebData, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\SimpleMembership.Mvc3.1.2\lib\Net40\WebMatrix.WebData.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IModelEntity.cs" />
+    <Compile Include="IReportsContext.cs" />
+    <Compile Include="IUserContext.cs" />
+    <Compile Include="Mappings\ClientMap.cs" />
+    <Compile Include="Mappings\ReportMap.cs" />
+    <Compile Include="Mappings\RoleMap.cs" />
+    <Compile Include="Migrations\201307020748500_AddReportsTable.cs" />
+    <Compile Include="Migrations\201307020748500_AddReportsTable.Designer.cs">
+      <DependentUpon>201307020748500_AddReportsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Mappings\UserProfileMap.cs" />
+    <Compile Include="Migrations\201307081220111_AddExtraFieldsOnUserProfile.cs" />
+    <Compile Include="Migrations\201307081220111_AddExtraFieldsOnUserProfile.Designer.cs">
+      <DependentUpon>201307081220111_AddExtraFieldsOnUserProfile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201307191000480_AddedClientUserTable.cs" />
+    <Compile Include="Migrations\201307191000480_AddedClientUserTable.Designer.cs">
+      <DependentUpon>201307191000480_AddedClientUserTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201307251323040_AddDateColumnsToUserProfile.cs" />
+    <Compile Include="Migrations\201307251323040_AddDateColumnsToUserProfile.Designer.cs">
+      <DependentUpon>201307251323040_AddDateColumnsToUserProfile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201307291233228_AddReportRoleTable.cs" />
+    <Compile Include="Migrations\201307291233228_AddReportRoleTable.Designer.cs">
+      <DependentUpon>201307291233228_AddReportRoleTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201307311057437_AddLogoFileOnUserProfile.cs" />
+    <Compile Include="Migrations\201307311057437_AddLogoFileOnUserProfile.Designer.cs">
+      <DependentUpon>201307311057437_AddLogoFileOnUserProfile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201308051159468_AddIsDefaultOnReport.cs" />
+    <Compile Include="Migrations\201308051159468_AddIsDefaultOnReport.Designer.cs">
+      <DependentUpon>201308051159468_AddIsDefaultOnReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201308201230057_SynchronizedChanges.cs" />
+    <Compile Include="Migrations\201308201230057_SynchronizedChanges.Designer.cs">
+      <DependentUpon>201308201230057_SynchronizedChanges.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201308230750457_AddIsHiddenColumnToReport.cs" />
+    <Compile Include="Migrations\201308230750457_AddIsHiddenColumnToReport.Designer.cs">
+      <DependentUpon>201308230750457_AddIsHiddenColumnToReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\CoreConfiguration.cs" />
+    <Compile Include="IIdentifiable.cs" />
+    <Compile Include="Models\Client.cs" />
+    <Compile Include="Models\ICategorizable.cs" />
+    <Compile Include="Models\INamed.cs" />
+    <Compile Include="Models\IRoleBased.cs" />
+    <Compile Include="Models\IVisibility.cs" />
+    <Compile Include="Models\Membership.cs" />
+    <Compile Include="Models\EntityBase.cs" />
+    <Compile Include="Models\OAuthMembership.cs" />
+    <Compile Include="Models\Report.cs" />
+    <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\UserProfile.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryableExtensions\CategorizableExtensions.cs" />
+    <Compile Include="QueryableExtensions\ClientsExtensions.cs" />
+    <Compile Include="QueryableExtensions\RoleBasedExtensions.cs" />
+    <Compile Include="QueryableExtensions\UserProfileExtensions.cs" />
+    <Compile Include="QueryableExtensions\VisibilityExtensions.cs" />
+    <Compile Include="ReportsContext.cs" />
+    <Compile Include="Services\IWebSecurityService.cs" />
+    <Compile Include="Services\WebSecurityService.cs" />
+    <Compile Include="UsersContext.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201307020748500_AddReportsTable.resx">
+      <DependentUpon>201307020748500_AddReportsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201307081220111_AddExtraFieldsOnUserProfile.resx">
+      <DependentUpon>201307081220111_AddExtraFieldsOnUserProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201307191000480_AddedClientUserTable.resx">
+      <DependentUpon>201307191000480_AddedClientUserTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201307251323040_AddDateColumnsToUserProfile.resx">
+      <DependentUpon>201307251323040_AddDateColumnsToUserProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201307291233228_AddReportRoleTable.resx">
+      <DependentUpon>201307291233228_AddReportRoleTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201307311057437_AddLogoFileOnUserProfile.resx">
+      <DependentUpon>201307311057437_AddLogoFileOnUserProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201308051159468_AddIsDefaultOnReport.resx">
+      <DependentUpon>201308051159468_AddIsDefaultOnReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201308201230057_SynchronizedChanges.resx">
+      <DependentUpon>201308201230057_SynchronizedChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201308230750457_AddIsHiddenColumnToReport.resx">
+      <DependentUpon>201308230750457_AddIsHiddenColumnToReport.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

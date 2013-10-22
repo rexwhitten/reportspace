@@ -1,0 +1,55 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "[0] Support", "[0] Support", "{74C64598-4C81-4B7F-A841-A74E6CB81BA5}"
+	ProjectSection(SolutionItems) = preProject
+		obj.application.xml = obj.application.xml
+		obj.parts.xml = obj.parts.xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "[1] Library", "[1] Library", "{84BB0E3D-378B-40DE-B11D-D871DB7DE282}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "[2] Web", "[2] Web", "{58C2CEA6-1F73-4465-B112-FB5CC0A4E243}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "[3] Tests", "[3] Tests", "{1B98AD67-160E-4AD6-A79C-F9A683501BC9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "[4] CLI", "[4] CLI", "{BA26761A-3D5E-4B8D-84DF-A47316D79B42}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportSpace.CustomerDashboard.Core", "ReportSpace.CustomerDashboard.Core\ReportSpace.CustomerDashboard.Core.csproj", "{CE1367E7-17A1-4009-925F-C5E2DB331FA8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportSpace.CustomerDashboard.Web", "ReportSpace.CustomerDashboard.Web\ReportSpace.CustomerDashboard.Web.csproj", "{0B608C05-08E3-4DF9-8E6C-53C3E11BEAC0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{BB6EC339-9CB6-4D14-94E2-AFFD596F1827}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		dev_acrowire|Any CPU = dev_acrowire|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CE1367E7-17A1-4009-925F-C5E2DB331FA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE1367E7-17A1-4009-925F-C5E2DB331FA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE1367E7-17A1-4009-925F-C5E2DB331FA8}.dev_acrowire|Any CPU.ActiveCfg = dev_acrowire|Any CPU
+		{CE1367E7-17A1-4009-925F-C5E2DB331FA8}.dev_acrowire|Any CPU.Build.0 = dev_acrowire|Any CPU
+		{CE1367E7-17A1-4009-925F-C5E2DB331FA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE1367E7-17A1-4009-925F-C5E2DB331FA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B608C05-08E3-4DF9-8E6C-53C3E11BEAC0}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{0B608C05-08E3-4DF9-8E6C-53C3E11BEAC0}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{0B608C05-08E3-4DF9-8E6C-53C3E11BEAC0}.dev_acrowire|Any CPU.ActiveCfg = dev_acrowire|Any CPU
+		{0B608C05-08E3-4DF9-8E6C-53C3E11BEAC0}.dev_acrowire|Any CPU.Build.0 = dev_acrowire|Any CPU
+		{0B608C05-08E3-4DF9-8E6C-53C3E11BEAC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B608C05-08E3-4DF9-8E6C-53C3E11BEAC0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CE1367E7-17A1-4009-925F-C5E2DB331FA8} = {84BB0E3D-378B-40DE-B11D-D871DB7DE282}
+		{0B608C05-08E3-4DF9-8E6C-53C3E11BEAC0} = {58C2CEA6-1F73-4465-B112-FB5CC0A4E243}
+	EndGlobalSection
+EndGlobal

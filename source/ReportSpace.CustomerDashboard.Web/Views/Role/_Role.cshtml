@@ -1,0 +1,29 @@
+﻿@using ReportSpace.CustomerDashboard.Web.Helpers
+@model ReportSpace.CustomerDashboard.Core.Models.Role
+
+<tr id="role_@Model.Id">
+    <td>@Model.Name</td>
+    <td>@Model.UserProfiles.Count users</td>
+    <td class="left">
+        <a href="#" class="btn edit-role-btn" data-modal-url="@Url.Action("edit", new { id = Model.Id })"><i class="iconfa-edit"></i></a>
+        @Ajax.ImageActionLink(
+            "<i class=\"icon-trash\"></i>", 
+            "destroy", 
+            "roles", 
+            new { id = @Model.Id }, 
+            new AjaxOptions
+                {
+                    Confirm = "Delete role?", 
+                    HttpMethod = "Delete",
+                    OnSuccess = "onSuccess"
+                },
+            new { @class = "btn"})
+    </td>
+</tr>
+
+<script type="text/javascript">
+    function onSuccess(data) {
+        var deletedRole = "#role_".concat(data.Id);
+        $(deletedRole).remove();
+    }
+</script>

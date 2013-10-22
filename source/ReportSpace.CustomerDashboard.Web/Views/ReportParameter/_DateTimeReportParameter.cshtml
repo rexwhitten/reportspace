@@ -1,0 +1,12 @@
+﻿@model ReportSpace.CustomerDashboard.Web.ViewModels.DateTimeReportParameter
+
+<div class="report-parameter par">
+    @Html.LabelFor(m => m.Key, Model.DisplayName)
+    <div class="input-append">
+        @Html.HiddenFor(m => m.Key)
+        @Html.TextBoxFor(m => m.Value, "{0:MM/dd/yyyy}", new { @class = "datepicker input-large"})
+        <span class="add-on">
+            <i class="icon-calendar"></i>
+        </span>
+    </div>
+</div>

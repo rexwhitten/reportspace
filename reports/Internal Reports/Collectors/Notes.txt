@@ -1,0 +1,5 @@
+Days Old Graph by Collector - Directly Accessible by collectors.  Report reads credentials of person logging in to show appropriate information.  This is the individual's view of the manager's version of this same report.  The purpose of this report is to display the inventory of a collector and how it may appear neglected in the eyes of a client.
+
+Days Old Subreport - Accessible only through the Days Old Graph by Collector report (through clicking a graphical column or linked total on right).
+
+File Notes - Directly accessible by collectors with adjustable Fileno parameter.  This allows a collector to view a specific file through the client's eyes to ensure it appears as desired.

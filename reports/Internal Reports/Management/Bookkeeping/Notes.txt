@@ -1,0 +1,3 @@
+Open Invoices by Client - This report shows # and dollar amount of open invoices owed by our clients to us.  Upon recent review, it appears I messed up the grouping around the file number.. maybe I should just omit that.  The rest of the info seems OK.
+
+Open Invoices by Client Subreport - only accessible when clicking through the Open Invoices by Client report.

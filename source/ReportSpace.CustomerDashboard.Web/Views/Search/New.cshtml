@@ -1,0 +1,21 @@
+﻿@{
+    Layout = null;
+}
+
+<ul class="nav nav-tabs nav-stacked">
+    <div class="widgetbox">
+        <h4 class="widgettitle">Search</h4>
+
+        <div class="widgetcontent">
+            @using (@Html.BeginForm("create", "search", new { }, FormMethod.Post, new { @class = "stdform" }))
+            {
+                <div class="input-append">
+                    <input type="text" name="searchTerm" placeholder="Enter ReportSpace File # and enter" value="@TempData["SearchTerm"]"/>
+                    <span class="add-on">
+                        <i class="icon-search"></i>
+                    </span>
+                </div>
+            }
+        </div>
+    </div>
+</ul>

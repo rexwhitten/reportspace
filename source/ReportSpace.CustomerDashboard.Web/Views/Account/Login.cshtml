@@ -1,0 +1,63 @@
+﻿@model ReportSpace.CustomerDashboard.Web.Models.LoginModel
+
+@{
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+<div class="loginpanel">
+    <div class="loginpanelinner">
+        <div class="logo animate0 bounceIn">
+            <img src="~/Content/images/logo_white_full.fw.png" alt="ReportSpace" />
+        </div>
+        @using (Html.BeginForm(new { ViewBag.ReturnUrl }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="inputwrapper animate1 bounceIn">
+                @Html.TextBoxFor(m => m.UserName, new { id = "username", placeholder = "Username" })
+
+            </div>
+            <div class="inputwrapper animate1 bounceIn">
+                @Html.PasswordFor(m => m.Password, new { id = "password", placeholder = "Password" })
+            </div>
+            <div class="inputwrapper animate1 bounceIn">
+                <button name="submit" onclick="">Sign In</button>
+            </div>
+            <div class="inputwrapper animate1 bounceIn">
+                <div class="pull-right">Not a member? @Html.ActionLink("Sign Up", "Register", "Account")</div>
+                <div>
+                    @Html.CheckBoxFor(m => m.RememberMe, new { @class = "remember" })
+                    @Html.LabelFor(m => m.RememberMe)
+                </div>
+            </div>
+            <p>
+                <div id="login_form_errors" class="alert alert-error">
+                    @Html.ValidationSummary(true)
+                    @Html.ValidationMessageFor(m => m.UserName)
+                    @Html.ValidationMessageFor(m => m.Password)
+                </div>
+            </p>
+        }
+    </div>
+    <!--loginpanelinner-->
+</div>
+<!--loginpanel-->
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#login').submit(function () {
+                var u = $('#username').val();
+                var p = $('#password').val();
+                if (u == '' && p == '') {
+                    $('.login-alert').fadeIn();
+                    return false;
+                }
+            });
+        });
+
+        $('#login_form_errors').hide();
+
+        function show_val() {
+            $('#login_form_errors').show();
+        }
+    </script>
+}

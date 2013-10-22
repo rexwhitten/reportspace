@@ -1,0 +1,31 @@
+﻿@using ReportSpace.CustomerDashboard.Web.Helpers
+@model ReportSpace.CustomerDashboard.Web.ViewModels.ReportViewModel
+
+<tr id="report-@Model.Id">
+    <td><a href="@Url.Action("show", new { id = Model.Id })"><b>@Model.Name</b></a></td>
+    <td>@Model.Description</td>
+    <td class="left">
+        @if (ViewBag.CanAddReports != null && ViewBag.CanAddReports)
+        {
+            <a href="#" class="btn edit-report-btn" data-modal-url="@Url.Action("edit", new { id = Model.Id})"><i class="iconfa-edit"></i></a>
+            @Ajax.ImageActionLink(
+                "<i class=\"icon-trash\"></i>", 
+                "Delete", 
+                "Reports", 
+                new { id = @Model.Id }, 
+                new AjaxOptions
+                    {
+                        Confirm = "Delete report?", 
+                        HttpMethod = "Delete",
+                        OnSuccess = "onSuccess"
+                    },
+                new { @class = "btn"})
+        }
+    </td>
+</tr>
+<script type="text/javascript">
+    function onSuccess(data) {
+        var deletedReport = "#report-".concat(data.Id);
+        $(deletedReport).remove();
+    }
+</script>

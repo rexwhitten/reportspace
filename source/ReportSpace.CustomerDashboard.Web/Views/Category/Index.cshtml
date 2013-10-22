@@ -1,0 +1,56 @@
+﻿
+@model ReportSpace.CustomerDashboard.Web.Controllers.Core.CataLogViewModel
+@{
+    
+    
+    ViewBag.Title = "Report Categories";
+    ViewBag.Message = String.Format("Home {0}", Model.Path);
+
+    ViewBag.Icon = "iconfa-folder-open";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row-fluid">
+    @if (Model.Items.Any())
+    {
+         <ul class="shortcuts">
+            @foreach (var item in Model.Items)
+            {
+                if(item.TypeName.ToLower() =="folder")
+                {
+                        <li class="events">
+                            <a href="?Path=@item.Path" style="margin-bottom:10px;">
+                            <span class="shortcuts-icon iconfa-folder-open" style="color:white;font-size:40px;"></span>
+                            <span class="shortcuts-label">@item.Name</span>
+                            </a>
+                        </li>
+                }
+                else
+                {
+                    if(Model.Path != "/")
+                    {
+                <li class="events">
+                    <a href="Category/Display/?display_name=@item.Name&Path=@item.Path" style="margin-bottom:10px;">
+                    <span class="shortcuts-icon iconfa-bar-chart" style="color:white;font-size:40px;"></span>
+                    <span class="shortcuts-label">@item.Name</span>
+                    </a>
+                </li>
+                    }
+                }
+                
+            }
+         </ul>
+    }
+    else
+    {
+        <h2>No Items to show at this time.</h2>
+    }
+      @Scripts.Render(
+                    "~/Content/js/jquery",
+                    "~/Content/js/bootstrap",
+        "~/Content/js/base");
+    <script type="text/javascript">
+   
+    </script>
+</div>

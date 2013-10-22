@@ -1,0 +1,7 @@
+Days Old Graph - This report displays the file inventory (by collector) in graphical format to reveal who may have files that appear neglected in the eyes of a client accessing the dashboard.
+
+Days Old Subreport - only accessible when clicking through the Days Old Graph report.
+
+Overdue Diary - This report graphically displays the queues (list of work to be done) by collector to reveal unworked tasks.
+
+Overdue Diary subreport - only accessibly when clicking through the Overdue Diary report.

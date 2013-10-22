@@ -1,0 +1,147 @@
+﻿@model ReportSpace.CustomerDashboard.Web.ViewModels.ReportViewModel
+@{
+    ViewBag.Action = Model.Id == 0 ? "create" : "update";
+    ViewBag.HttpMethod = Model.Id == 0 ? "POST" : "PUT";
+    Layout = null;
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>@ViewBag.DialogTitle</h3>
+</div>
+@using (Ajax.BeginForm((string)ViewBag.Action, "reports",
+    new AjaxOptions
+    {
+        HttpMethod = ViewBag.HttpMethod,
+        OnBegin = "ajaxValidate",
+        OnSuccess = "onSuccess",
+        OnFailure = "onFailure"
+    },
+    new { @class = "stdform" }))
+{
+    <div id="validation-summary">
+        @Html.Partial("_ValidationSummary", Model)
+    </div>
+    <div class="modal-body">
+        @Html.LabelFor(m => m.Path, "Select report")
+        <span class="field">
+            @Html.DropDownListFor(m => m.Path, (SelectList)ViewBag.ReportItems, "Available reports", new { id = "report-select", @class = "uniformselect" })
+            @Html.ValidationMessageFor(m => m.Path)
+        </span>
+
+        @Html.LabelFor(m => m.Name, "Name")
+        <span class="field">
+            @Html.TextBoxFor(m => m.Name, new { id = "report-name", @class = "input-large" })
+            @Html.ValidationMessageFor(m => m.Name)
+        </span>
+
+        @Html.LabelFor(m => m.Description, "Description")
+        <span class="field">
+            @Html.TextBoxFor(m => m.Description, new { id = "report-description", @class = "input-large" })
+            @Html.ValidationMessageFor(m => m.Description)
+        </span>
+
+        @Html.LabelFor(m => m.Category, "Select category")
+        <span class="field">
+            @Html.DropDownListFor(m => m.Category, (SelectList)ViewBag.Categories, "Available categories", new { @class = "uniformselect" })
+            @Html.ValidationMessageFor(m => m.Category)
+        </span>
+
+        @Html.LabelFor(m => m.Roles, "Assigned Roles")
+        <span class="formwrapper">
+            <input id="role-select" class="input-large" type="hidden" name="Roles" value="@Model.Roles"/>
+        </span>
+        
+        @Html.LabelFor(m => m.OpensOnSearch, "Open on search")
+        <span class="formwrapper">
+            @Html.CheckBoxFor(m => m.OpensOnSearch)
+        </span>
+        
+        @Html.LabelFor(m => m.OpensOnSearch, "Hide for non-admin users")
+        <span class="formwrapper">
+            @Html.CheckBoxFor(m => m.IsHidden)
+        </span>
+    </div>
+    
+    <div class="modal-footer">
+        <a href="#" data-dismiss="modal" class="btn">Close</a>
+        <input type="submit" class="btn btn-primary" value="Save" name="">
+    </div>
+}
+
+<script type="text/javascript" src="~/Scripts/select2.js"></script>
+<script type="text/javascript">
+    function onSuccess(data) {
+        $(".modal").modal("hide");
+        if (@Model.Id == '0') {
+            $("#reportsTable tbody").append(data);
+            toastr["success"]("Successfully added new report");
+        } 
+        else {
+            $('#@string.Format("report-{0}", Model.Id)').replaceWith(data);
+            toastr["success"]("Successfully updated report");
+        }
+    }
+
+    function onFailure(e) {
+        $("#validation-summary").html(e.responseText);
+        toastr["error"]("Could not save the report. Please check the validation summary");
+    }
+
+    function ajaxValidate() {
+        return $(".stdform").validate().form();
+    }
+
+    $(document).ready(function () {
+        $('#report-select').bind("change", function(event) {
+            if ($('#report-name').val() == '') {
+                $('#report-name').val = event.currentTarget.value;
+            }
+        });
+        $('#role-select').select2({
+            multiple: true,
+            placeholder: 'Select roles',
+            width: 'resolve',
+            quietMillis: 100,
+            minimumInputLength: 1,
+            closeOnSelect: false,
+            initSelection: function (element, callback) {
+                var data = [];
+                var roles = $(element).val();
+                $(element).val('');
+                $(roles.split(",")).each(function () {
+                    var role = this.split(";");
+                    data.push({ id: role[0], text: role[1] });
+                });
+                var ids = [];
+                $(data).each(function () {
+                    ids.push(this.id);
+                });
+
+                $(element).val = ids.join(',');
+
+                callback(data);
+            },
+            ajax: {
+                type: "GET",
+                url: '@Url.Action("", "roles", new { format = "json" })',
+                id: function (role) { return { id: role.Id }; },
+                dataType: 'json',
+                data: function (term) {
+                    return {
+                        nameFilter: term, // search term
+                    };
+                },
+                results: function (data, page) { // parse the results into the format expected by Select2.
+                    var length = data.length;
+                    for (var i = 0; i < length; i++) {
+                        data[i].id = data[i].Id;
+                        data[i].text = data[i].Name;
+                    }
+
+                    return { results: data };
+                }
+            }
+        });
+    });
+</script>

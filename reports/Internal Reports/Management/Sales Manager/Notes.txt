@@ -1,0 +1,10 @@
+Client Number Lookup - Management - This report displays all client numbers with their respective clients.  This is a reference for someone looking to run a report based off client numbers.  This "management" version displays all clients, unlike the sales team version of this report.
+
+Comparison by Rep - Choice - This report shows YTD comparison in claim placement for this year vs last year with a parameter to choose which sales person you'd like to view.
+
+Volume Report by Rep - Bobby - Shows placements for prior week (dates adjustable by parameter) for all sales people (choice of sales person via parameter).
+
+Volume Report by Rep - Sam - Shows placements for prior week (dates adjustable by parameter) for sales people on Sam Fensterstock's team (choice of sales person via parameter).
+
+Volume Report by Rep - Steve no USF - This is just an example of a custom report that Sam asked me for yesterday.  He wanted the volume report for one of his sales people (Steve Kosek - sales person 6) excluding his main account, US Foods.  I created this is SSRS and deployed it for his Sam's use.
+
