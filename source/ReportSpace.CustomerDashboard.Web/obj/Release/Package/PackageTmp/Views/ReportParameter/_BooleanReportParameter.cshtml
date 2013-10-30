@@ -1,0 +1,9 @@
+﻿@model ReportSpace.CustomerDashboard.Web.ViewModels.BooleanReportParameter
+
+<div class="report-parameter par">
+    <div class="input-append">
+        @Html.HiddenFor(m => m.Key)
+        @Html.CheckBoxFor(m => m.Value);
+    </div>
+    @Html.LabelFor(m => m.Value, Model.DisplayName)
+</div>

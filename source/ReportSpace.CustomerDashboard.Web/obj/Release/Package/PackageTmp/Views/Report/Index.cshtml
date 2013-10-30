@@ -1,0 +1,13 @@
+﻿@model IEnumerable<ReportSpace.CustomerDashboard.Web.ViewModels.ReportViewModel>
+
+@{
+    ViewBag.Icon = "iconfa-folder-open-alt";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("_ReportTable")
+
+@section scripts
+{
+    @Scripts.Render("~/Content/local/reports")
+}

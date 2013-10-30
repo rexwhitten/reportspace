@@ -8,6 +8,7 @@
     {
         public RoleMap()
         {
+            /*
             HasMany(u => u.UserProfiles).WithMany(u => u.Roles).Map(
                 m =>
                 {
@@ -15,6 +16,7 @@
                     m.MapLeftKey("RoleId");
                     m.MapRightKey("UserId");
                 });
+             */
         }
     }
 }

@@ -1,0 +1,27 @@
+﻿@model ReportSpace.CustomerDashboard.Web.Models.LoginModel
+
+@{
+    ViewBag.Title = "Log in";
+}
+
+<body class="loginpage">
+
+
+
+</body>
+<section id="content">
+    <script type="text/javascript">
+        jQuery(document).ready(function(){
+            jQuery('#login').submit(function(){
+                var u = jQuery('#username').val();
+                var p = jQuery('#password').val();
+                if(u == '' && p == '') {
+                    jQuery('.login-alert').fadeIn();
+                    return false;
+                }
+            });
+        });
+    </script>
+</section>
+@RenderSection("content", required: true )
+@RenderBody();

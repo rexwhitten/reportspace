@@ -1,0 +1,58 @@
+﻿@model ReportSpace.CustomerDashboard.Core.Models.Role
+
+@{
+    ViewBag.DialogTitle = ViewBag.DialogTitle ?? "Create role";
+    ViewBag.HttpMethod = Model.Id == 0 ? "POST" : "PUT";
+    ViewBag.Action = Model.Id == 0 ? "create" : "update";
+    Layout = null;
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>@ViewBag.DialogTitle</h3>
+</div>
+
+@using (Ajax.BeginForm((string)ViewBag.Action, "roles",
+    new AjaxOptions
+    {
+        HttpMethod = ViewBag.HttpMethod,
+        OnBegin = "ajaxValidate",
+        OnSuccess = "onSuccess",
+        OnFailure = "onFailure"
+    },
+    new { @class = "stdform" }))
+{
+    <div class="modal-body">
+        @Html.LabelFor(m => m.Name, "Name")
+        <span class="field">
+            @Html.TextBoxFor(m => m.Name, new { @class = "input-large" })
+            @Html.ValidationMessageFor(m => m.Name)
+        </span>
+    </div>
+    <div class="modal-footer">
+        <a href="#" data-dismiss="modal" class="btn">Close</a>
+        <input type="submit" class="btn btn-primary" value="Save" name="">
+    </div>
+}
+
+<script type="text/javascript">
+    function onSuccess(data) {
+        $(".modal").modal("hide");
+        if (@Model.Id == '0') {
+            $("#roles-table tbody").append(data);
+            toastr["success"]("Successfully added new role");
+        } 
+        else {
+            $('#@string.Format("role_{0}", Model.Id)').replaceWith(data);
+            toastr["success"]("Successfully updated role");
+        }
+    }
+
+    function onFailure(e) {
+        $("#validation-summary").html(e.responseText);
+    }
+
+    function ajaxValidate() {
+        return $(".stdform").validate().form();
+    }
+</script>

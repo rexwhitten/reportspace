@@ -382,7 +382,6 @@
     <Content Include="Content\images\logo_white_full.fw.png" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\logo_menu.gif" />
-    <Content Include="Content\images\ReportSpace-logo.png" />
     <Content Include="Content\images\barmenu.png" />
     <Content Include="Content\images\bcarrow.png" />
     <Content Include="Content\images\bg1.png" />
@@ -861,6 +860,7 @@
     <Content Include="Content\fonts\roboto\Roboto-Condensed-webfont.ttf" />
     <Content Include="Content\fonts\roboto\Roboto-Condensed-webfont.woff" />
     <Content Include="Content\images\.DS_Store" />
+    <None Include="Properties\PublishProfiles\CLIENT_REPORTS.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />

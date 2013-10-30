@@ -1,0 +1,39 @@
+﻿@using ReportSpace.CustomerDashboard.Web.Helpers
+@model ReportSpace.CustomerDashboard.Web.ViewModels.UserProfileViewModel
+@{
+    var rowClass = Model.IsConfirmed ? string.Empty : "info";
+}
+<tr class="@rowClass" id="user_@Model.Id">
+    <td>@Model.FirstName</td>
+    <td>@Model.LastName</td>
+    <td>@Model.Email</td>
+    <td>@Model.UserName</td>
+    <td>@Model.Roles</td>
+    <td>@Model.IsConfirmed</td>
+    <td class="left">   
+        <a href="#" class="btn edit-user-btn" data-modal-url="@Url.Action("edit", new { id = Model.Id})"><i class="iconfa-edit"></i></a>
+        @if (User.IsInRole("Administrator") && !Model.IsConfirmed)
+        {
+            <a href="#" class="btn activate-user" data-url="@Url.Action("confirm", "account", new {id = Model.Id})"><i class="iconfa-thumbs-up"></i></a>
+        }
+        @Ajax.ImageActionLink(
+                "<i class=\"icon-trash\"></i>", 
+                "delete", 
+                "users", 
+                new { id = @Model.Id }, 
+                new AjaxOptions
+                    {
+                        Confirm = "Delete user?", 
+                        HttpMethod = "Delete",
+                        OnSuccess = "onSuccess"
+                    },
+                new { @class = "btn"})
+    </td>
+</tr>
+
+<script type="text/javascript">
+    function onSuccess(data) {
+        var deletedUser = "#user_".concat(data.Id);
+        $(deletedUser).remove();
+    }
+</script>

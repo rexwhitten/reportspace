@@ -1,0 +1,25 @@
+﻿@using ReportSpace.CustomerDashboard.Web.ViewModels
+@model IList<IReportParameter>
+
+@{
+    Layout = null;
+}
+
+@using (Ajax.BeginForm("Refresh", "ReportViewer", new { }, new AjaxOptions { HttpMethod = "get", UpdateTargetId = "report-viewer-container" }, new { @class = "stdform" }))
+{
+   @Html.Hidden("reportPath", Request["reportPath"])
+   for(int i=0; i<Model.Count(); i++)
+   {
+       @Html.EditorFor(m => m[i], "_ReportParameter")
+   }
+
+    <input type="submit" value="Reload" class="btn btn-primary pull-right">
+}
+
+<script type="text/javascript">
+    $(".datepicker").datepicker({ dateFormat: "mm/dd/yy" });
+
+    $("#parameter-select").select2({
+        width: 'resolve'
+    });
+</script>

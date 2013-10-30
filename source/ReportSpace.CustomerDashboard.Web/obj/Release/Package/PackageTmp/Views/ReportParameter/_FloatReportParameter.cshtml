@@ -1,0 +1,9 @@
+﻿@model ReportSpace.CustomerDashboard.Web.ViewModels.FloatReportParameter
+
+<div class="report-parameter par">
+    @Html.LabelFor(m => m.Key, Model.DisplayName)
+    <div class="input-append">
+        @Html.HiddenFor(m => m.Key)
+        @Html.TextBoxFor(m => m.Value, new { @class = "input-large", type = "number" })
+    </div>
+</div>

@@ -2,6 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "[0] Support", "[0] Support", "{74C64598-4C81-4B7F-A841-A74E6CB81BA5}"
 	ProjectSection(SolutionItems) = preProject
+		empty_security_database_sql.txt = empty_security_database_sql.txt
 		obj.application.xml = obj.application.xml
 		obj.parts.xml = obj.parts.xml
 	EndProjectSection
@@ -25,6 +26,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{BB6EC3
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportSpace.Web", "ReportSpace.Web\ReportSpace.Web.csproj", "{6C5F2201-0CE8-4ABE-8DC3-28C4D428CDBF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +47,12 @@ Global
 		{0B608C05-08E3-4DF9-8E6C-53C3E11BEAC0}.dev_acrowire|Any CPU.Build.0 = dev_acrowire|Any CPU
 		{0B608C05-08E3-4DF9-8E6C-53C3E11BEAC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B608C05-08E3-4DF9-8E6C-53C3E11BEAC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C5F2201-0CE8-4ABE-8DC3-28C4D428CDBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C5F2201-0CE8-4ABE-8DC3-28C4D428CDBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C5F2201-0CE8-4ABE-8DC3-28C4D428CDBF}.dev_acrowire|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C5F2201-0CE8-4ABE-8DC3-28C4D428CDBF}.dev_acrowire|Any CPU.Build.0 = Debug|Any CPU
+		{6C5F2201-0CE8-4ABE-8DC3-28C4D428CDBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C5F2201-0CE8-4ABE-8DC3-28C4D428CDBF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -51,5 +60,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{CE1367E7-17A1-4009-925F-C5E2DB331FA8} = {84BB0E3D-378B-40DE-B11D-D871DB7DE282}
 		{0B608C05-08E3-4DF9-8E6C-53C3E11BEAC0} = {58C2CEA6-1F73-4465-B112-FB5CC0A4E243}
+		{6C5F2201-0CE8-4ABE-8DC3-28C4D428CDBF} = {58C2CEA6-1F73-4465-B112-FB5CC0A4E243}
 	EndGlobalSection
 EndGlobal

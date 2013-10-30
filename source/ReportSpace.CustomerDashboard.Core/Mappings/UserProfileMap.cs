@@ -8,6 +8,7 @@
     {
         public UserProfileMap()
         {
+            /*
             HasMany(u => u.Roles).WithMany(u => u.UserProfiles).Map(
                 m =>
                 {
@@ -26,6 +27,7 @@
 
             HasRequired(up => up.Membership)
                 .WithRequiredPrincipal().WillCascadeOnDelete(true);
+             * */
         }
     }
 }

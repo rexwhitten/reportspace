@@ -1,0 +1,63 @@
+﻿@model ReportSpace.CustomerDashboard.Web.Models.RegisterModel
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<div class="regpanel">
+    <div class="regpanelinner">
+        <div class="pageheader animate1 bounceIn">
+            <div class="pageicon">
+                <span class="iconfa-hand-down"></span>
+            </div>
+            <div class="pagetitle">
+                <h1>@ViewBag.Title.</h1>
+                <h5>Create a new account.</h5>
+            </div>
+        </div>
+
+        @using (Html.BeginForm(new {}))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary()
+
+            <div class="animate2 bounceIn">
+                <fieldset>
+                    <legend>Account information:</legend>
+                    <div class="inputwrapper">
+                        @Html.TextBoxFor(m => m.UserName, new { placeholder = "Username" })
+                    </div>
+                    <div class="inputwrapper">
+                        @Html.PasswordFor(m => m.Password, new { placeholder = "Password" })
+                    </div>
+                    <div class="inputwrapper">
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { placeholder = "Confirm Password" })
+                    </div>
+                </fieldset>
+            </div>
+            <div class="animate2 bounceIn">
+                <fieldset>
+                    <legend>Personal information</legend>
+                    <div class="inputwrapper">
+                        @Html.TextBoxFor(m => m.FirstName, new { placeholder = "First name" })
+                    </div>
+                    <div class="inputwrapper">
+                        @Html.TextBoxFor(m => m.LastName, new { placeholder = "Last name" })
+                    </div>
+                    <div class="inputwrapper">
+                        @Html.TextBoxFor(m => m.Email, new { placeholder = "Email address" })
+                    </div>
+                </fieldset>
+                </div>
+            <div class="inputwrapper animate3 bounceIn">
+                <button name="submit" onclick="">Register</button>
+            </div>
+        }
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

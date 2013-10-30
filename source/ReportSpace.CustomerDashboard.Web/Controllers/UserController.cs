@@ -14,109 +14,48 @@ namespace ReportSpace.CustomerDashboard.Web.Controllers
     using AutoMapper;
 
     using WebMatrix.WebData;
+    using System;
+    using ReportSpace.CustomerDashboard.Web.Controllers.Core;
 
     [Authorize(Roles = "Administrator")]
     public class UserController : Controller
     {
+        #region [ Fields ] 
         private IUserContext _userContext;
-        
+        private ReportingService2010.ReportingService2010 m_client = new ReportingService2010.ReportingService2010();
+        private SSRSContext m_context = new SSRSContext();
+        #endregion 
+
+        #region [ Constructors ]
         public UserController(IUserContext context)
         {
             _userContext = context;
         }
+        #endregion
 
+        #region [ Controller Methods ]
         public ActionResult Index()
         {
-            List<UserProfile> userProfiles = _userContext.UserProfiles.ToList();
+            List<UserProfile> userProfiles = new List<UserProfile>();
 
-            return View(userProfiles.Select(Mapper.Map<UserProfileViewModel>).ToList());
-        }
-
-        public ActionResult Show(int id)
-        {
-            UserProfile userProfile = _userContext.UserProfiles.Find(id);
-
-            return View("_User", Mapper.Map<UserProfileViewModel>(userProfile));
-        }
-
-        public ActionResult New()
-        {
-            return View("UserEdit", new UserProfileViewModel());
-        }
-
-        public ActionResult Create(UserProfileViewModel userProfileViewModel)
-        {
-            if (!ModelState.IsValid)
+            var client_folders = this.m_context.GetCatalog("/Client Reports/root");
+            
+            foreach (var client_folder in client_folders.Items)
             {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                string client_name = client_folder.Name.Replace(" ", "").ToLower();
 
-                return PartialView("_ValidationSummary", userProfileViewModel);
+                if (!WebSecurity.UserExists(client_name))
+                {
+                    WebSecurity.CreateUserAndAccount(client_name, "client_!1@");
+                }
             }
 
-            var newProfile = SaveUserProfile(
-                Mapper.Map<UserProfile>(userProfileViewModel), 
-                userProfileViewModel.Password);
-
-            return this.PartialView("_User", Mapper.Map<UserProfileViewModel>(newProfile));
+            return View();
         }
 
-        public ActionResult Edit(int id)
-        {
-            UserProfile userProfile = _userContext.UserProfiles.Find(id);
-            
-            ViewBag.DialogTitle = "Edit User";
-            return View("UserEdit", Mapper.Map<UserProfileViewModel>(userProfile));
-        }
+        #endregion 
 
-        public ActionResult Update(int id, UserProfileViewModel userProfileViewModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return PartialView("_ValidationSummary", userProfileViewModel);
-            }
-
-            var userProfile = Mapper.Map<UserProfile>(userProfileViewModel);
-            if (!string.IsNullOrEmpty(userProfileViewModel.Password))
-            {
-                ChangePassword(userProfileViewModel, userProfile);
-            }
-
-            _userContext.SaveChanges();
-            
-            return View("_User", Mapper.Map<UserProfileViewModel>(userProfile));
-        }
-
-        private static bool ChangePassword(UserProfileViewModel userProfileViewModel, UserProfile userProfile)
-        {
-            var passwordResetToken = WebSecurity.GeneratePasswordResetToken(userProfile.UserName);
-            
-            return WebSecurity.ResetPassword(passwordResetToken, userProfileViewModel.Password);
-        }
-
-        public ActionResult Delete(int id)
-        {
-            var userProfile = _userContext.UserProfiles.Include(up => up.Roles).Include(up => up.Clients).First(up => up.Id == id);
-            _userContext.UserProfiles.Remove(userProfile);
-
-            _userContext.SaveChanges();
-
-            return Json(userProfile);
-        }
-
-        private UserProfile SaveUserProfile(UserProfile userProfile, string password)
-        {
-            WebSecurity.CreateUserAndAccount(
-                userProfile.UserName,
-                password,
-                new { userProfile.FirstName, userProfile.LastName, userProfile.Email, userProfile.CompanyLogoFileName });
-
-            var savedUserProfile = _userContext.UserProfiles.First(up => up.UserName == userProfile.UserName);
-            savedUserProfile.Clients = userProfile.Clients;
-            savedUserProfile.Roles = userProfile.Roles;
-            _userContext.SaveChanges();
-
-            return savedUserProfile;
-        }
+        #region [ Local Methods ] 
+        #endregion
     }
 }

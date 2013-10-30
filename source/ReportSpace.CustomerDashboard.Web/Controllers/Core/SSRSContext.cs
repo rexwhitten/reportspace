@@ -50,10 +50,7 @@ namespace ReportSpace.CustomerDashboard.Web.Controllers.Core
             try
             {
                 // Basic 
-                string username = ConfigurationManager.AppSettings["ssrs.username"];
-                string password = ConfigurationManager.AppSettings["ssrs.password"];
-                string domain = ConfigurationManager.AppSettings["ssrs.domain"];
-                this.m_client.Credentials = new System.Net.NetworkCredential(username, password, domain);
+                this.m_client.Credentials = new System.Net.NetworkCredential("IISServiceAct", "!QAZxsw2", "acro");
 
                 this.m_client.Url = ConfigurationManager.AppSettings["ReportServerUrl"];
 

@@ -1,0 +1,248 @@
+﻿@model ReportSpace.CustomerDashboard.Web.ViewModels.UserProfileViewModel
+@{
+    ViewBag.DialogTitle = ViewBag.DialogTitle ?? "Create User";
+    ViewBag.HttpMethod = Model.Id == 0 ? "POST" : "PUT";
+    ViewBag.Action = Model.Id == 0 ? "create" : "update";
+    Layout = null;
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>@ViewBag.DialogTitle</h3>
+</div>
+
+@using (Ajax.BeginForm((string)ViewBag.Action, "users",
+    new AjaxOptions
+    {
+        HttpMethod = ViewBag.HttpMethod,
+        OnBegin = "ajaxValidate",
+        OnSuccess = "onSuccess",
+        OnFailure = "onFailure"
+    },
+    new { @class = "stdform edit-user-form", enctype = "multipart/form-data" }))
+{
+    <div id="validation-summary">
+        @Html.Partial("_ValidationSummary", Model)
+    </div>
+    
+    <div class="modal-body">
+        @Html.LabelFor(m => m.UserName, "Username")
+        <span class="field">
+            @Html.TextBoxFor(m => m.UserName, new { @class = "input-large" })
+            @Html.ValidationMessageFor(m => m.UserName)
+        </span>
+
+        @Html.LabelFor(m => m.UserName, "Password")
+        <span class="field">
+            @Html.PasswordFor(m => m.Password, new { @class = "input-large" })
+            @Html.ValidationMessageFor(m => m.Password)
+        </span>
+
+        @Html.LabelFor(m => m.FirstName, "First name")
+        <span class="field">
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "input-large" })
+            @Html.ValidationMessageFor(m => m.FirstName)
+        </span>
+
+        @Html.LabelFor(m => m.LastName, "Last name")
+        <span class="field">
+            @Html.TextBoxFor(m => m.LastName, new { @class = "input-large" })
+            @Html.ValidationMessageFor(m => m.LastName)
+        </span>
+
+        @Html.LabelFor(m => m.Email, "Email")
+        <span class="field">
+            @Html.TextBoxFor(m => m.Email, new { @class = "input-large" })
+            @Html.ValidationMessageFor(m => m.Email)
+        </span>
+
+        @Html.LabelFor(m => m.Clients, "Assigned Clients:")
+        <span class="formwrapper">
+            <input id="client-select" class="input-large" type="hidden" name="Clients" value="@Model.Clients"/>
+        </span>
+
+        @Html.LabelFor(m => m.Roles, "Assigned Roles:")
+        <span class="formwrapper">
+            <input id="role-select" class="input-large" type="hidden" name="Roles" value="@Model.Roles"/>
+        </span>
+
+        @Html.LabelFor(m => m.CompanyLogoFileName, "Company logo")
+        <div class="formwrapper">
+            <input id="company-log-filename" type="hidden" value="@Model.CompanyLogoFileName" name="CompanyLogoFileName" />
+            <span class="btn btn-file">Upload a file<input id="file-input" type="file" /></span>
+        </div>
+
+    </div>
+    
+    <div class="modal-footer">
+        <a href="#" data-dismiss="modal" class="btn">Close</a>
+        <input type="submit" class="btn btn-primary" value="Save" name="">
+    </div>
+}
+
+@Scripts.Render(
+"~/Content/js/bootstrap",
+"~/Content/js/base")
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        var input = document.getElementById("file-input");
+        var formdata = false;
+        var formActionName = '@Url.Action("", "file")';
+        var formMethodName = "POST";
+        
+        if (window.FormData) {
+            formdata = new window.FormData();  
+        }  
+        
+        if (input.addEventListener) {
+            input.addEventListener("change", function (evt) {  
+                var i = 0, len = this.files.length, img, reader, file;
+                toastr["info"]("Uploading file...");
+                $('.stdform input[type="submit"]').disabled = true;
+                for ( ; i < len; i++ ) {  
+                    file = this.files[i];  
+      
+                    if (!!file.type.match(/image.*/)) {  
+                        if ( window.FileReader ) {  
+                            reader = new FileReader();  
+                            reader.readAsDataURL(file);  
+                        }  
+                        if (formdata) {  
+                            formdata.append("images[]", file);  
+                        }  
+                    }     
+                } 
+                
+                if (formdata) {  
+                    $.ajax({  
+                        url: formActionName,  
+                        type: formMethodName,  
+                        data: formdata,  
+                        processData: false,  
+                        contentType: false,  
+                        success: function (res) { 
+                            toastr["success"]("File uploaded");
+                            $('.stdform input[type="submit"]').disabled = false;
+                            $('#company-log-filename').val(res.fileName);
+                        }  
+                    });  
+                }  
+              
+            }, false);  
+        }
+
+        $('#client-select').select2({
+            multiple: true,
+            placeholder: 'All clients',
+            width: 'resolve',
+            quietMillis: 100,
+            minimumInputLength: 1,
+            closeOnSelect: false,
+            initSelection: function (element, callback) {
+                var data = [];
+                var clients = $(element).val();
+                $(element).val('');
+                $(clients.split(",")).each(function () {
+                    var client = this.split(";");
+                    data.push({ id: client[0], text: client[0] + ' - ' + client[1] });
+                });
+                var ids = [];
+                $(data).each(function () {
+                    ids.push(this.id);
+                });
+
+                $(element).val = ids.join(',');
+                
+                callback(data);
+            },
+            ajax: { 
+                type: "GET",
+                url: "@Url.Action("index", "client")",
+                id: function (client) { return { id: client.Id }; },
+                dataType: 'json',
+                data: function (term) {
+                    return {
+                        nameFilter: term, // search term
+                    };
+                },
+                results: function (data, page) { // parse the results into the format expected by Select2.
+                    var length = data.length;
+                    for (var i = 0; i < length; i++) {
+                        data[i].id = data[i].Id;
+                        data[i].text = data[i].id + " - " + data[i].Name;
+                    }
+
+                    return { results: data };
+                }
+            }
+        });
+
+        $('#role-select').select2({
+            multiple: true,
+            placeholder: 'Select roles',
+            width: 'resolve',
+            quietMillis: 100,
+            minimumInputLength: 1,
+            closeOnSelect: false,
+            initSelection: function (element, callback) {
+                var data = [];
+                var roles = $(element).val();
+                $(element).val('');
+                $(roles.split(",")).each(function () {
+                    var role = this.split(";");
+                    data.push({ id: role[0], text: role[1] });
+                });
+                var ids = [];
+                $(data).each(function () {
+                    ids.push(this.id);
+                });
+
+                $(element).val = ids.join(',');
+                
+                callback(data);
+            },
+            ajax: { 
+                type: "GET",
+                url: '@Url.Action("", "roles", new { format = "json" })',
+                id: function (role) { return { id: role.Id }; },
+                dataType: 'json',
+                data: function (term) {
+                    return {
+                        nameFilter: term, // search term
+                    };
+                },
+                results: function (data, page) { // parse the results into the format expected by Select2.
+                    var length = data.length;
+                    for (var i = 0; i < length; i++) {
+                        data[i].id = data[i].Id;
+                        data[i].text = data[i].Name;
+                    }
+
+                    return { results: data };
+                }
+            }
+        });
+    });
+
+    function onSuccess(data) {
+        $(".modal").modal("hide");
+        if (@Model.Id == '0') {
+            $("#users-table tbody").append(data);
+            toastr["success"]("Successfully added new user");
+        } 
+        else {
+            $('#@string.Format("user_{0}", Model.Id)').replaceWith(data);
+            toastr["success"]("Successfully updated user");
+        }
+    }
+
+    function onFailure(e) {
+        $("#validation-summary").html(e.responseText);
+        toastr["error"]("Could not save the user. Please check the validation summary");
+    }
+
+    function ajaxValidate() {
+        return $(".stdform").validate().form();
+    }
+</script>

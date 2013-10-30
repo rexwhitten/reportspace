@@ -1,0 +1,22 @@
+﻿@model ReportSpace.CustomerDashboard.Web.ViewModels.StringReportParameter
+
+<div class="report-parameter par">
+    @Html.LabelFor(m => m.Value, Model.DisplayName)
+
+    @Html.HiddenFor(m => m.Key)
+    @if (Model.ValidValues.Any())
+    {
+        @Html.DropDownListFor(
+                m => m.Value,
+                Model.ValidValues.Select(v => new SelectListItem { Selected = v == Model.Value, Value = v, Text = v }),
+                new { @class = "input-large", id = "parameter-select" })
+    }
+    else
+    {
+        <div class="input-append">
+            @Html.TextBoxFor(m => m.Value, new { @class = "input-large", @value = Model.Value });
+        </div>
+    }
+
+
+</div>

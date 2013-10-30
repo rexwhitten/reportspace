@@ -77,21 +77,7 @@
 
         private string AddClientIdsParameter(string reportParametersUrl, IDictionary<string, string> reportParameters)
         {
-            IList<int> clientIds = _userContext.UserProfiles.Include(up => up.Clients)
-                .First(up => up.UserName == User.Identity.Name)
-                .Clients
-                .Select(c => c.Id)
-                .ToList();
-
-            clientIds = FilterClientIdsFromRequestToTheOnesThatTheUserHasAccessTo(reportParameters, clientIds);
-            
-            if (clientIds.Any())
-            {
-                var clientNoParameterString = string.Format("ClientNo={0}", string.Join(",", clientIds));
-                reportParametersUrl = string.Concat(reportParametersUrl, "&", clientNoParameterString);
-            }
-
-            return reportParametersUrl;
+            return "/NotImplemented";
         }
 
         private IList<int> FilterClientIdsFromRequestToTheOnesThatTheUserHasAccessTo(

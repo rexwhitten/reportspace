@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Administration";
+    ViewBag.Description = "Manage Users, Customers and Reports";
+    ViewBag.Icon = "iconfa-hdd";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row-fluid">
+    <script type="text/javascript">       
+    </script>
+
+    <div style="width: 100%; margin: 0px;">
+        <div id="site_admin_tabs" class="tabbedwidget">
+            <ul>
+                <li><a href="#tabs-1" class="async-tab" data-url="@Url.Action("Index", "User")">Users</a></li>
+                <li><a href="#tabs-2" class="async-tab" data-url="@Url.Action("Index", "Role")">Roles</a></li>
+            </ul>
+            <div id="tabs-1">
+            </div>
+            <div id="tabs-2">
+            </div>
+        </div>
+        <!--tabbedwidget-->
+    </div>
+</div>
+@section scripts
+{
+    @Scripts.Render("~/Content/local/admin")
+}

@@ -67,14 +67,7 @@ namespace ReportSpace.CustomerDashboard.Web.Controllers
         #region Helpers
         private ActionResult RedirectToLocal(string returnUrl)
         {
-            if (Url.IsLocalUrl(returnUrl))
-            {
-                return Redirect(returnUrl);
-            }
-            else
-            {
-                return RedirectToAction("Categories", "Report");
-            }
+            return RedirectToAction("Categories", "/");
         }
 
         public enum ManageMessageId

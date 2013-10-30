@@ -16,6 +16,7 @@
         [Required]
         public string UserName { get; set; }
 
+        /*
         public string Password { get; set; }
 
         [Required]
@@ -53,6 +54,7 @@
                 return roles.Split(',').Where(n => !string.IsNullOrEmpty(n)).Select(n => Convert.ToInt32(n)).ToList();
             }
         }
+        */
 
         public UserProfileViewModel()
         {
@@ -60,7 +62,7 @@
 
         public UserProfileViewModel(UserProfile userProfile)
         {
-            Mapper.Map(userProfile, this);
+            //Mapper.Map(userProfile, this);
         }
     }
 }

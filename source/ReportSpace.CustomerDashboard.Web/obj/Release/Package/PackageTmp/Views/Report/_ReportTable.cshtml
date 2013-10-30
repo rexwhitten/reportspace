@@ -1,0 +1,35 @@
+﻿@model IEnumerable<ReportSpace.CustomerDashboard.Web.ViewModels.ReportViewModel>
+@{
+    ViewBag.Title = "Report Table";
+    Layout = null;
+}
+
+@if (ViewBag.CanAddReports != null && ViewBag.CanAddReports)
+{
+    <span>
+        <a href="#" id="add-report-btn" class="btn btn-rounded" data-modal-url="@Url.Action("new")"><i class="icon-tasks"></i>&nbsp; Add Report</a>
+    </span>   
+}
+<div class="modal hide fade in" id="edit-report">
+    <div id="edit-report-container"></div>
+</div>
+
+<table id="reportsTable" class="table table-hover table-striped table-condensed responsive">
+    <thead>
+        <tr>
+            <th>Report Name</th>
+            <th>Description</th>
+            @if (ViewBag.CanAddReports != null && ViewBag.CanAddReports)
+            {
+                <th>Actions</th>
+            }
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var report in Model)
+        {
+            @Html.Partial("ReportTableItem", report)
+        }
+    </tbody>
+</table>

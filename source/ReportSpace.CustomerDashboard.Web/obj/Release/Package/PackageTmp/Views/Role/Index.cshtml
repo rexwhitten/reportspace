@@ -1,0 +1,25 @@
+﻿@model IList<ReportSpace.CustomerDashboard.Core.Models.Role>
+
+<span>
+    <a href="#" class="btn btn-rounded" id="add-role-btn" data-modal-url="@Url.Action("New", "Role")"><i class="icon-eye-open"></i>&nbsp; Add Role</a>
+</span>
+
+<div class="modal hide fade in" id="edit-role">
+    <div id="edit-role-container"></div>
+</div>
+
+<table class="table table-hover table-striped table-condensed responsive" id="roles-table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Users</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var role in Model)
+        {
+            @Html.Partial("_Role", role)
+        }
+    </tbody>
+</table>

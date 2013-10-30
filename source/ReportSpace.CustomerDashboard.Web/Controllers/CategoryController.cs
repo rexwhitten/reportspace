@@ -24,8 +24,17 @@
         public ActionResult Index(string path = "/")
         {
             // REX: Get a Listing of Folders tom the SSRS Server 
+            // Detect the Client, and then Only Paths under that client (SSRS folders should be oriented by user names) 
+            if (User.Identity.Name == "root")
+            {
+                path = "/Client Reports/" + User.Identity.Name;
+            }
+            else
+            {
+                path = "/Client Reports/root/" + User.Identity.Name;
+            }
             var items = this.m_context.GetCatalog(path);
-             
+            
 
             return this.View(items);
         }

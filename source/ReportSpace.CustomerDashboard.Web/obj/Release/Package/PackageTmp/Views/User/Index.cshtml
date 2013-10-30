@@ -1,0 +1,34 @@
+﻿@model List<ReportSpace.CustomerDashboard.Web.ViewModels.UserProfileViewModel>
+
+<span>
+    <a href="#" class="btn btn-rounded" id="add-user-btn" data-modal-url="@Url.Action("New", "User")"><i class="icon-user"></i>&nbsp; Add User</a>
+</span>
+
+
+<div class="modal hide fade in" id="edit-user">
+    <div id="edit-user-container"></div>
+</div>
+
+<table class="table table-hover table-striped table-condensed responsive" id="users-table">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>User Name</th>
+            <th>Role</th>
+            <th>Active</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            @Html.Partial("_User", user)
+        }
+    </tbody>
+</table>
+
+@section scripts {
+    @Scripts.Render("~/Content/local/admin")
+}

@@ -299,7 +299,7 @@ namespace ReportSpace.CustomerDashboard.Web.Controllers
         {
             var success = false;
             var userProfile = _userContext.UserProfiles.SingleOrDefault(up => up.Id == id);
-
+            /*
             if (userProfile != null && !string.IsNullOrEmpty(userProfile.Membership.ConfirmationToken))
             {
                 success = WebSecurity.ConfirmAccount(userProfile.Membership.ConfirmationToken);
@@ -309,7 +309,7 @@ namespace ReportSpace.CustomerDashboard.Web.Controllers
             {
                 Response.StatusCode = (int)HttpStatusCode.NotFound;
             }
-
+            */
             return success 
                 ? Json(new { url = Url.Action("Show", "User", new { id }) }) 
                 : Json(new { error = "User not found or already confirmed." });

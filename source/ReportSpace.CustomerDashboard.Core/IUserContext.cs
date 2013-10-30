@@ -16,4 +16,8 @@
 
         int SaveChanges();
     }
+
+    public static class IUSerContextExtensions
+    {
+    }
 }

@@ -1,0 +1,42 @@
+﻿@model ReportSpace.CustomerDashboard.Web.Models.RegisterModel
+
+@{
+    ViewBag.Title = "Setup Administration";
+    ViewBag.Description = "Setup Administration for this site.";
+    ViewBag.TitleIcon = "iconfa-user";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Create User Widget -->
+<div class="widgetbox box-inverse">
+    <h4 class="widgettitle">Create Administration User</h4>
+    <div class="widgetcontent nopadding">
+        @using (Html.BeginForm("SetupAdmin", "Admin", FormMethod.Post, new { Class = "stdform stdform2" }))
+        {
+            @Html.AntiForgeryToken()
+            <p>
+                @Html.LabelFor(m => m.UserName)
+                <span class="field">
+                    @Html.TextBoxFor(m => m.UserName, new { Class = "input-xxlarge" })
+                </span>
+            </p>
+            <p>
+			    @Html.LabelFor(m => m.Password)
+			    <span class="field">
+				    @Html.PasswordFor(m => m.Password, new { Class = "input-xxlarge" })
+			    </span>
+		    </p>
+            <p>
+			    @Html.LabelFor(m => m.Email)
+			    <span class="field">
+				    @Html.TextBoxFor(m => m.Email,new { Class = "input-xxlarge" })
+			    </span>
+		    </p>
+            
+            <p class="stdformbutton">
+                <button class="btn btn-primary">Register</button>
+                <button class="btn">Reset</button>
+            </p>
+        }
+    </div>
+</div>
